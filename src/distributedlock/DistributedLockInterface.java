@@ -4,11 +4,14 @@
  * and open the template in the editor.
  */
 package distributedlock;
-import java.rmi.*;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 /**
  *
  * @author chandan5
  */
-public interface DistributedLockInterface extends java.rmi.Remote{
-    
+public interface DistributedLockInterface extends Remote{
+    public int LockRequest(Clock c) throws RemoteException;
+    public int UnlockRequest(Clock c) throws RemoteException;
 }
