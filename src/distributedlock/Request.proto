@@ -1,17 +1,12 @@
-package googleprotobuf_json;
-option java_outer_classname = "ResultProto";
+package distributedlock;
+option java_outer_classname = "RequestProto";
 
-message CourseMarks {
-  optional string name = 1;
-  optional int32 score = 2;
+message ClockMsg {
+  required int32 id = 1;
+  required int32 val = 2;
 }
 
-message StudentMsg {
-  optional string name = 1;
-  optional int32 rollNum = 2;
-  repeated CourseMarks marks = 3;
-}
-
-message Result {
-  repeated StudentMsg studentmsg = 1;
+message Request {
+  required int32 pid = 1;
+  repeated ClockMsg clocks = 2;
 }

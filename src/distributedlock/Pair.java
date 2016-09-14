@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 package distributedlock;
-import java.rmi.*;
+
 /**
  *
  * @author chandan5
  */
-public interface DistributedLockInterface extends java.rmi.Remote{
+public class Pair {
     
 }

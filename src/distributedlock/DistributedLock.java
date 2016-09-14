@@ -4,13 +4,20 @@
  * and open the template in the editor.
  */
 package distributedlock;
+import java.rmi.*;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  *
  * @author chandan5
  */
-public class DistributedLock {
 
+
+public class DistributedLock {
+    SortedSet<String> clock = new TreeSet<String>();
+    int id;
+    
     /**
      * @param args the command line arguments
      */
