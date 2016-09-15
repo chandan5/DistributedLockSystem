@@ -38,6 +38,10 @@ public class Clock {
         clock.add(p);
     }
     
+    public void mergeClock(Clock c) {
+        
+    }
+    
     byte[] getProtoBytes() {
         Request.Builder request = Request.newBuilder();
         request.setPid(pid);
