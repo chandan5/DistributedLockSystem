@@ -24,7 +24,7 @@ import java.util.List;
 public class DistributedLock extends UnicastRemoteObject implements DistributedLockInterface {
 //    Clock clock = new Clock();
     public static Clock clock = null;
-    public static Clock lastlockClock = null;
+//    public static Clock lastlockClock = null;
     static String outputFileName;
     Integer counter = 0;
     Integer lockStatus = 0;
@@ -35,7 +35,9 @@ public class DistributedLock extends UnicastRemoteObject implements DistributedL
 
     @Override
     public int LockRequest(byte [] r) throws RemoteException {
-        lastlockClock = clock;
+//        lastlockClock = clock;
+        //depending on lockStatus either return 1 or (queue and return 0)
+        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -47,7 +49,7 @@ public class DistributedLock extends UnicastRemoteObject implements DistributedL
     private Integer getLock() {
         if(clock != null) {
             counter++;
-            
+            // Send LockRequest to all
         }
         return 0;
     }
@@ -63,9 +65,6 @@ public class DistributedLock extends UnicastRemoteObject implements DistributedL
             String[] tokens = lines.get(k-1).split(":");
             globalCounter = Integer.parseInt(tokens[0]);
         }
-        else {
-            
-        }
         globalCounter++;
         System.out.println(globalCounter);
         System.out.println(fw);
@@ -74,17 +73,19 @@ public class DistributedLock extends UnicastRemoteObject implements DistributedL
     }
     
     private void releaseLock() {
-        
+        // send unlock request to all those who are queued in queue
     }
     
     private void work() throws IOException {
         if(counter < 100) {
-            lockStatus = 1;
+            lockStatus = 1; // interested in lock
             if(getLock() == 1) {
-                lockStatus = 2;
+                lockStatus = 2; // is in critical section => Send no
                 criticalSection();
-                lockStatus = 3;
+                lockStatus = 3; // means releasing lock => not interested in lock => send ok
                 releaseLock();
+                lockStatus = 4; // means sleeping => not interested in lock => Send ok
+                //sleep();
                 work();
             }
         }
@@ -133,8 +134,8 @@ public class DistributedLock extends UnicastRemoteObject implements DistributedL
 //        for(Integer id=0; id<n; id++) {
 //            distributedLocks[id] = (DistributedLock) Naming.lookup("//localhost/RmiServer"+id);
 //        }
-        //obj.work();
-        obj.criticalSection();
+        obj.work();
+//        obj.criticalSection();
         return;
     }
 }
