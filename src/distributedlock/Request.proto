@@ -1,4 +1,4 @@
-package distributedlock;
+
 option java_outer_classname = "RequestProto";
 
 message ClockMsg {
@@ -6,7 +6,7 @@ message ClockMsg {
   required int32 val = 2;
 }
 
-message RequestMsg {
+message Request {
   required int32 pid = 1;
   repeated ClockMsg clocks = 2;
 }

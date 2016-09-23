@@ -1,0 +1,13 @@
+RMI server started
+2
+java RMI registry already exists.
+PeerServer bound in registry
+2 worked.. :)
+lockStatus of 2 : 1
+2 Inside getLock function
+Added my request to queue
+Hello i am 2 .SendingLockRequest to 0 .My clock was {(2,1)}
+Hello i am 2 .SendingLockRequest to 1 .My clock was {(2,1)}
+Hello i am 2 .ReceiveLockRequest from 0 .His clock was {(0,1)}. My clock was {(0,1),(2,1)}
+Hello i am 2 .ReceiveLockRequest from 1 .His clock was {(1,1)}. My clock was {(0,1),(1,1),(2,1)}
+Hello i am 2 .ReceiveUnlockRequest from 1

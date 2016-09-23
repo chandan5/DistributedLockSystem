@@ -1,0 +1,66 @@
+0
+0 Inside getLock function
+0 worked.. :)
+1
+1 Inside getLock function
+1 Inside getLock function
+1 said ok, so adding it to acks.
+1 worked.. :)
+1 worked.. :)
+2
+2 Inside getLock function
+2 said ok, so adding it to acks.
+2 said ok, so adding it to acks.
+2 worked.. :)
+Added my request to queue
+Added my request to queue
+Added my request to queue
+Added request from 1
+Added request from 2
+Added request from 2
+Deleting my lock request
+Deleting my lock request
+Hello i am 0 .ReceiveLockRequest from 1 .His clock was {(1,1)}. My clock was {(0,1),(1,1)}
+Hello i am 0 .ReceiveLockRequest from 2 .His clock was {(2,1)}. My clock was {(1,1),(2,1)}
+Hello i am 0 .SendingLockRequest to 1 .My clock was {(0,1)}
+Hello i am 0 .SendingLockRequest to 2 .My clock was {(1,1)}
+Hello i am 0 .SendingUnlockRequest to 1 .Released clock was {(2,1)}
+Hello i am 1 .ReceiveLockRequest from 0 .His clock was {(0,1)}. My clock was {(0,1),(1,1)}
+Hello i am 1 .ReceiveLockRequest from 2 .His clock was {(2,1)}. My clock was {(0,1),(1,1),(2,1)}
+Hello i am 1 .ReceiveUnlockRequest from 0
+Hello i am 1 .SendingLockRequest to 0 .My clock was {(0,1),(1,1)}
+Hello i am 1 .SendingLockRequest to 2 .My clock was {(0,1),(1,1)}
+Hello i am 1 .SendingUnlockRequest to 2 .Released clock was {(2,1)}
+Hello i am 2 .ReceiveLockRequest from 0 .His clock was {(0,1)}. My clock was {(0,1),(2,1)}
+Hello i am 2 .ReceiveLockRequest from 1 .His clock was {(1,1)}. My clock was {(0,1),(1,1),(2,1)}
+Hello i am 2 .ReceiveUnlockRequest from 1
+Hello i am 2 .SendingLockRequest to 0 .My clock was {(2,1)}
+Hello i am 2 .SendingLockRequest to 1 .My clock was {(2,1)}
+PeerServer bound in registry
+PeerServer bound in registry
+PeerServer bound in registry
+RMI server started
+RMI server started
+RMI server started
+globalCounter: 303
+globalCounter: 304
+java RMI registry already exists.
+java RMI registry already exists.
+java RMI registry created.
+java.lang.NullPointerException
+lockStatus of 0 : 1
+lockStatus of 0 : 2
+lockStatus of 0 : 3
+lockStatus of 1 : 0
+lockStatus of 1 : 1
+lockStatus of 1 : 1
+lockStatus of 1 : 2
+lockStatus of 1 : 3
+lockStatus of 2 : 1
+{(1,1)} -> 0 ::: {(1,1)} -> 1 ::: 
+{(2,1)} -> 0 ::: {} -> 1 ::: {(2,1)} -> 2 ::: 
+{(2,1)} -> 0 ::: {} -> 1 ::: {(2,1)} -> 2 ::: 
+{(2,1)} -> 1 ::: {(2,1)} -> 2 ::: 
+{(2,1)} -> 1 ::: {(2,1)} -> 2 ::: 
+{(2,1)} -> 2 ::: 
+{} -> 1 ::: {(2,1)} -> 2 ::: 

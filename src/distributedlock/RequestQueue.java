@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package distributedlock;
+//package distributedlock;
 
+import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import distributedlock.RequestProto.RequestMsg;
-import distributedlock.RequestProto.ClockMsg;
-import java.util.Iterator;
-import distributedlock.Clock;
+//import distributedlock.Pair;
+//import distributedlock.RequestProto.RequestMsg;
+//import distributedlock.RequestProto.ClockMsg;
+//import java.util.Iterator;
+//import distributedlock.Clock;
 /**
  *
  * @author chandan5
@@ -32,14 +34,14 @@ import distributedlock.Clock;
 public class RequestQueue {
     SortedSet<Pair<Clock,Integer> > queue = new TreeSet<Pair<Clock,Integer> >();
     
-    public RequestQueue(Integer processId) {
-        Integer x = 0;
-        Pair p = new Pair(x,processId);
-        queue.add(p);
+    public RequestQueue() {//(Clock c, Integer processId) {
+//        Pair<Clock,Integer> p = new Pair<Clock,Integer>(c,processId);
+//        queue.add(p);
     }
     
+    // We queue inferior priority lock requests
     public void addRequest(Clock c, Integer processId) {
-        Pair p = new Pair(c,processId);
+        Pair<Clock,Integer> p = new Pair<Clock,Integer>(c,processId);
         queue.add(p);
     }
     
@@ -48,12 +50,27 @@ public class RequestQueue {
     }
     
     public Integer deleteRequest(Clock c, Integer processId) {
-        Pair p = new Pair(c,processId);
+//        Pair p = new Pair(c,processId);
+        Pair<Clock,Integer> p = new Pair<Clock,Integer>(c,processId);
         if(queue.contains(p)) {
             queue.remove(p);
             return 1;
         }
         else
             return 0;
+    }
+    
+    public String toString() {
+        Iterator it = queue.iterator();
+        String s = new String();
+       
+        while (it.hasNext()) {
+            Pair<Clock,Integer> p = (Pair<Clock,Integer>) it.next();
+            s += p.left.toString();
+            s += " -> ";
+            s += p.right;
+            s += " ::: ";
+        }
+        return s;
     }
 }

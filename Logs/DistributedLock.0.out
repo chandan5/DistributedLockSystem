@@ -1,0 +1,26 @@
+RMI server started
+0
+java RMI registry created.
+PeerServer bound in registry
+0 worked.. :)
+lockStatus of 0 : 1
+0 Inside getLock function
+Added my request to queue
+Hello i am 0 .SendingLockRequest to 1 .My clock was {(0,1)}
+Hello i am 0 .ReceiveLockRequest from 1 .His clock was {(1,1)}. My clock was {(0,1),(1,1)}
+Added request from 1
+1 said ok, so adding it to acks.
+{(1,1)} -> 0 ::: {(1,1)} -> 1 ::: 
+Hello i am 0 .SendingLockRequest to 2 .My clock was {(1,1)}
+Hello i am 0 .ReceiveLockRequest from 2 .His clock was {(2,1)}. My clock was {(1,1),(2,1)}
+Added request from 2
+{(2,1)} -> 0 ::: {} -> 1 ::: {(2,1)} -> 2 ::: 
+2 said ok, so adding it to acks.
+lockStatus of 0 : 2
+globalCounter: 303
+lockStatus of 0 : 3
+{(2,1)} -> 0 ::: {} -> 1 ::: {(2,1)} -> 2 ::: 
+Deleting my lock request
+{} -> 1 ::: {(2,1)} -> 2 ::: 
+Hello i am 0 .SendingUnlockRequest to 1 .Released clock was {(2,1)}
+java.lang.NullPointerException

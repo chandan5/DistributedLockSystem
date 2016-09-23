@@ -3,10 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package distributedlock;
+//ackage distributedlock;
 
-import distributedlock.RequestProto.RequestMsg;
-import distributedlock.RequestProto.ClockMsg;
+//import distributedlock.RequestProto.RequestMsg;
+//import distributedlock.RequestProto.ClockMsg;
+//import RequestProto.RequestMsg;
+//import RequestProto.ClockMsg;
+
+import com.google.protobuf.InvalidProtocolBufferException;
+import static java.lang.Integer.max;
 import java.util.HashMap;
 import java.util.Set;
 /**
@@ -23,11 +28,27 @@ public class Clock implements Comparable<Clock> {
 //    SortedSet<Pair<Integer,Integer> > clock = new TreeSet<Pair<Integer,Integer> >();
 
     public Clock(Integer processId) {
+        System.out.println(processId);
         _clock.put(processId, 0);
     }
     
-    public void mergeClock(Clock c) {
+    public Clock() {
         
+    }
+    
+    public void mergeClock(Clock c) {
+        Set<Integer> cKeys = c._clock.keySet();
+        for(Integer key: cKeys) {
+            if(_clock.containsKey(key)) {
+                this.add(key,max(_clock.get(key), c._clock.get(key)));
+            }
+            else
+                this.add(key, c._clock.get(key));
+        }
+    }
+    
+    public void add(Integer processId, Integer clockVal) {
+        _clock.put(processId, clockVal);
     }
     
     @Override
@@ -35,52 +56,60 @@ public class Clock implements Comparable<Clock> {
         Set<Integer> cKeys = c._clock.keySet();
         Set<Integer> _clockKeys = _clock.keySet();
         cKeys.retainAll(_clockKeys);
-        Integer smaller = 1;
-        Integer greater = 1;
+        Integer less = 0;
+        Integer more = 0;
         for(Integer key: cKeys) {
-            if(_clock.get(key) == c._clock.get(key)) {
-                smaller = 0;
-                greater = 0;
+            if(_clock.get(key) > c._clock.get(key)) {
+                more++;
             }
             else if(_clock.get(key) < c._clock.get(key)) {
-                greater = 0;
-            }
-            else {
-                smaller = 0;
+                less++;
             }
         }
-        if(smaller == 1)
+        if(more == 0 && less != 0)
             return -1;
-        if(greater == 1)
+        if(more != 0 && less == 0)
             return 1;
         return 0;
     }
     
     public String toString() {
         String s = new String();
-        s += '{';
+        s += "{";
         for (HashMap.Entry<Integer, Integer> entry : _clock.entrySet())
         {
-            s += '(' + entry.getKey() + "," + entry.getValue() + "),";
+            s += "(" + entry.getKey() + "," + entry.getValue() + "),";
         }
-        if(s.length() >= 1) {
+        if(s.length() > 1) {
             s = s.substring(0,s.length()-1);
         }
-        s += '}';
+        s += "}";
         return s;
     }
     
-    byte[] getProtoBytes(Integer processId) {
-        RequestMsg.Builder request = RequestMsg.newBuilder();
+    byte[] getRequestProtoBytes(Integer processId, Integer withClock) {
+        RequestProto.Request.Builder request = RequestProto.Request.newBuilder();
         request.setPid(processId);
-        
-        for (HashMap.Entry<Integer, Integer> entry : _clock.entrySet()) {
-            ClockMsg.Builder clockmsg = ClockMsg.newBuilder();
-            clockmsg.setId(entry.getKey());
-            clockmsg.setVal(entry.getValue());
-            request.addClocks(clockmsg);
+        if(withClock == 1) {
+            for (HashMap.Entry<Integer, Integer> entry : _clock.entrySet()) {
+                RequestProto.ClockMsg.Builder clockmsg = RequestProto.ClockMsg.newBuilder();
+                clockmsg.setId(entry.getKey());
+                clockmsg.setVal(entry.getValue());
+                request.addClocks(clockmsg);
+            }
         }
-        RequestMsg r = request.build();
+        RequestProto.Request r = request.build();
         return r.toByteArray();
+    }
+    
+    static Pair<Clock,Integer> getClockPidPair(byte [] r) throws InvalidProtocolBufferException {
+        RequestProto.Request request = RequestProto.Request.parseFrom(r);
+        Integer processId = request.getPid();
+        Clock _c = new Clock();
+        for(RequestProto.ClockMsg c : request.getClocksList()) {
+            _c.add(c.getId(), c.getVal());
+        }
+        Pair<Clock,Integer> p = new Pair<Clock,Integer>(_c,processId);
+        return p;
     }
 }
